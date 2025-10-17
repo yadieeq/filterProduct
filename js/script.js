@@ -37,6 +37,8 @@
 
 // const
 const selectPrice = document.querySelector('#product-price')
+const productMinPrice = document.querySelector("#product-min_price")
+const productMaxPrice = document.querySelector("#product-max_price")
 const selectType = document.querySelector('#product-type')
 const discountCheck = document.querySelector("#product-discount")
 const menuWrapper = document.querySelector('.menu-wrapper')
@@ -80,13 +82,13 @@ const addCategoryOptionsHTML = () => {
     addType.innerHTML = optionsResultHTML
 }
 
-const addPriceOprionsHTML = () => {
-    let optionsResultHTML = '<option value="0">Любая цена</option>'
-    for (const key in priceFilter) {
-        optionsResultHTML += createOptionFromPrice(priceFilter[key].text, key)
-    }
-    selectPrice.innerHTML = optionsResultHTML
-}
+// const addPriceOprionsHTML = () => {
+//     let optionsResultHTML = '<option value="0">Любая цена</option>'
+//     for (const key in priceFilter) {
+//         optionsResultHTML += createOptionFromPrice(priceFilter[key].text, key)
+//     }
+//     selectPrice.innerHTML = optionsResultHTML
+// }
 //  --- list ---
 const showListProductsHTML = () => {
     let listResultHTML = ''
@@ -99,21 +101,30 @@ const showListProductsHTML = () => {
 
 // ------------ filters ----------------
 const filterProducts = () => {
-    const selectedPriceFilter = selectPrice.value
+    // const selectedPriceFilter = selectPrice.value
+    const selectedMinimalPrice = productMinPrice.value
+    const selectedMaximalPrice = productMaxPrice.value
     const selectedTypeFilter = selectType.value
     const selectedDiscount = discountCheck.checked
 
-    if (selectedPriceFilter == 0 && selectedTypeFilter == 0) return menuWrapper.innerHTML = productsData.map(createOneProductHTML).join("")
+    // if (selectedPriceFilter == 0 && selectedTypeFilter == 0) return menuWrapper.innerHTML = productsData.map(createOneProductHTML).join("")
 
     //! ----------------------------
-    const {
-        min,
-        max
-    } = priceFilter[selectedPriceFilter] || {
-        min: 0,
-        max: Infinity
-    }
+    // const {
+    //     min,
+    //     max
+    // } = priceFilter[selectedPriceFilter] || {
+    //     min: 0,
+    //     max: Infinity
+    // }
+    const min = selectedMinimalPrice == "" ? 0 : +selectedMinimalPrice
+    const max = selectedMaximalPrice == "" ? Infinity : +selectedMaximalPrice
     
+    
+
+    console.log(selectedMinimalPrice, selectedMaximalPrice)
+    
+
     const filtered = productsData.filter((elem) => {
             const isPrice = elem.price >= min && elem.price <= max
             const isCategory = selectedTypeFilter == 0 ? true : elem.category == selectedTypeFilter;
@@ -142,7 +153,7 @@ const filterProducts = () => {
     menuWrapper.innerHTML = filtered.map(createOneProductHTML).join("")
 }
 
-selectPrice.onchange = filterProducts
+// selectPrice.onchange = filterProducts
 selectType.onchange = filterProducts
 
 
@@ -160,4 +171,4 @@ addClose.onclick = toggleAddMenuVisibility
 // starts
 showListProductsHTML()
 addCategoryOptionsHTML()
-addPriceOprionsHTML()
+// addPriceOprionsHTML()
