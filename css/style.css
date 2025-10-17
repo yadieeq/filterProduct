@@ -1,8 +1,16 @@
+body {
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+}
+
 .menu-wrapper {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 20px;
+    width: 100%;
     padding: 20px;
+    overflow: auto;
 }
 
 .menu__card img {
@@ -10,15 +18,86 @@
 }
 
 .filter-wrapper {
-    height: 100vh;
+    height: 100%;
     width: 20%;
     gap: 30px;
     background-color: #b3b3b3;
-    gap: 16px;
+    gap: 20px;
     min-width: 150px;
+    padding: 20px;
 }
 
 .filter-wrapper select {
     width: 100%;
     height: 50px;
 }
+
+.add-btn {
+    position: absolute;
+    display: flex;
+    border-radius: 100%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+    width: 50px;
+    height: 50px;
+    bottom: 30px;
+    right: 30px;
+}
+
+.overlay {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    background: #000;
+    opacity: 50%;
+    /* display: none; */
+}
+
+.add-menu {
+    position: absolute;
+    right: calc(50% - 150px);
+    top: 20%;
+    width: 300px;
+    z-index: 999;
+    background-color: #FFF;
+    border-radius: 30px;
+    gap: 25px;
+    padding: 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+}
+
+.add-menu input,
+.add-menu select {
+    width: 100%;
+    height: 40px;
+    border: none;
+    padding-left: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.30);
+    border-radius: 8px;
+}
+
+.add__buttons {
+    width: 100%;
+    gap: 30px;
+}
+
+.add__buttons button {
+    width: 80px;
+    height: 30px;
+    border: none;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+    border-radius: 8px;
+}
+
+.add__buttons button:hover,
+.add-btn:hover {
+    scale: 0.95;
+}
+
+.add__buttons button:active,
+.add-btn:active {
+    scale: 0.90;
+}
+
+
+
+

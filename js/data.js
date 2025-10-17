@@ -3,6 +3,14 @@
 // category
 // name
 
+
+// ----- helper -------------
+// helper
+function generateID() {
+    return Math.random().toString().slice(2) + '-' + Date.now();
+}
+
+
 const categoryShema = {
     1: 'Каши',
     2: 'Овощи и яйца',
@@ -36,34 +44,37 @@ const productsData = [{
         imageSrc: 'i/im1.jpg',
         category: 1,
         price: 80,
-        _id: '0001'
+        _id: generateID(),
+        isDiscount : true,
     },
     {
         name: 'Яйца с овощами',
         imageSrc: 'i/im2.jpg',
         category: 2,
         price: 70,
-        _id: '0002'
+        _id: generateID()
     },
     {
         name: 'Ланч',
         imageSrc: 'i/im3.jpg',
         category: 3,
         price: 30,
-        _id: '0003'
+        _id: generateID(),
+        isDiscount : true,
     },
     {
         name: 'Суп',
         imageSrc: 'i/im4.jpg',
         category: 4,
         price: 140,
-        _id: '0004'
+        _id: generateID()
     },
     {
         name: 'Сырники',
         imageSrc: 'i/im5.jpg',
         category: 5,
         price: 90,
-        _id: '0005'
+        _id: generateID(),
+        isDiscount : true,
     },
 ]

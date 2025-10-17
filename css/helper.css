@@ -16,8 +16,18 @@ h5 {
     font-size: clamp(10px, 1vw, 16px);
 }
 
+
 /* display - justifyContent - alignItems - flexDirection*/
 
+.display-none {
+    display: none !important;
+}
+.display-flex {
+    display: flex !important;
+}
+.display-block {
+    display: block !important;
+}
 /*row*/
 .f-c-c-r {
     display: flex;

@@ -1,34 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menu</title>
+    <!-- lib -->
+    <!-- css -->
+    <link href="https://cdn.jsdelivr.net/npm/toggle-checkbox-radio/dist/toggle-checkbox-radio.min.css" rel="stylesheet" />
+    <!-- my css -->
     <link rel="stylesheet" href="css/helper.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body class="f-s-s-r">
+
     <div class="filter-wrapper f-s-s-c">
         <h3>Цена</h3>
-        <select name="Цена" id="product-price">
-            
-        </select>
-
+        <select name="Цена" id="product-price"></select>
         <h3>Тип</h3>
-        <select name="Тип" id="product-type">
+        <select name="Тип" id="product-type"></select>
+        <h3>Скидки</h3>
+        <label><input type="checkbox" id="product-discount" class="checkbox color-primary" checked /> </label>
 
-        </select>
-    </div>
-    <div class="menu-wrapper">
-        <!-- <div class="menu__card f-s-s-c">
-            <img src="i/im1.jpg" alt="">
-            <h3>Овсянка</h3>
-            <h4>Каши</h4>
-            <h4>110</h4> -->
-        </div>
-    </div>
+
+    </div> 
+
+
     
+    <div class="menu-wrapper"></div>
+    <div class="add-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M352 128C352 110.3 337.7 96 320 96C302.3 96 288 110.3 288 128L288 288L128 288C110.3 288 96 302.3 96 320C96 337.7 110.3 352 128 352L288 352L288 512C288 529.7 302.3 544 320 544C337.7 544 352 529.7 352 512L352 352L512 352C529.7 352 544 337.7 544 320C544 302.3 529.7 288 512 288L352 288L352 128z"/></svg></div>
+    <div class="overlay display-none"></div>
+    <div class="add-menu f-c-c-c display-none">
+        <input type="text" class="add-name" placeholder="Название">
+        <input type="number" class="add-price" placeholder="Цена">
+        <input type="text" class="add-img_src" placeholder="src картинки">
+        <select name="Категория" class="add-type"></select>
+        <div class="add__buttons f-c-c-r">
+            <button class="add-close">Close</button>
+            <button class="add-apply">Apply</button>
+        </div>
+
+    </div>
+
+
+
     <script src="js/data.js"></script>
     <script src="js/script.js"></script>
 </body>
+
 </html>
