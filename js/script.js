@@ -1,5 +1,4 @@
 // const
-const selectPrice = document.querySelector('#product-price')
 const productMinPrice = document.querySelector("#product-min_price")
 const productMaxPrice = document.querySelector("#product-max_price")
 const selectType = document.querySelector('#product-type')
@@ -216,25 +215,36 @@ const localStorageNames = {
 const saveFilterType = () => {
     localStorage.setItem(localStorageNames.SAVED_FILTER_TYPE, +selectType.value)
 }
-// const saveFilterPrice = () => {
-    
-// }
+const saveFilterMinPrice = () => {
+    localStorage.setItem(localStorageNames.SAVED_MIN_PRICE, +productMinPrice.value)
+}
+const saveFilterMaxPrice = () => {
+    localStorage.setItem(localStorageNames.SAVED_MAX_PRICE, +productMaxPrice.value)
+}
 selectType.addEventListener("change", saveFilterType)
+productMinPrice.addEventListener("change", saveFilterMinPrice)
+productMaxPrice.addEventListener("change", saveFilterMaxPrice)
 
-// save products list
+// save products data
 const saveProducts = () => {
     localStorage.setItem(localStorageNames.SAVED_PRODUCTS, JSON.stringify(productsData))
 }
 
-
+// onload localStorage
 const onLoadStorage = () => {
+    const savedMinPrice = localStorage.getItem(localStorageNames.SAVED_MIN_PRICE)
+    const savedMaxPrice = localStorage.getItem(localStorageNames.SAVED_MAX_PRICE)
+    const savedType = localStorage.getItem(localStorageNames.SAVED_FILTER_TYPE)
     const savedData = localStorage.getItem(localStorageNames.SAVED_PRODUCTS)
-    if (savedData) {
-        productsData = JSON.parse(savedData)
-    }
+    
+    if (savedData) productsData = JSON.parse(savedData)
 
-    selectType.value = localStorage.getItem(localStorageNames.SAVED_FILTER_TYPE);
+    savedType == null ? selectType.value = 0 : selectType.value = savedType
+    savedMinPrice <= 0 ? productMinPrice.value = "" : productMinPrice.value = savedMinPrice
+    savedMaxPrice <= 0 ? productMaxPrice.value = "" : productMaxPrice.value = savedMaxPrice
 }
+
+
 // starts
 addCategoryOptionsHTML()
 onLoadStorage()
