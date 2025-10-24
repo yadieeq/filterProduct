@@ -39,7 +39,7 @@ const priceFilter = {
 
 //price = all, 0 - 50, 51 - 100, 101 - 180, 181 - Infinity
 
-const productsData = [{
+let productsData = [{
         name: 'Овсянка',
         imageSrc: 'i/im1.jpg',
         category: 1,

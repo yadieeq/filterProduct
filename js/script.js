@@ -1,40 +1,3 @@
-// const 
-
-// logical 
-// helper
-// generateID +
-
-// createProduct 
-
-// filerPrice 
-// filterCategory 
-// createOneProductHTML 
-// showListProductsHTML 
-// createOptionFromCategories
-// createOptionFromPrice
-// events 
-
-// starts
-
-
-// Plans 
-//-1 create repositories +
-//0 connect repositories with your comp +
-
-// 1 write html +
-// 2 add css +
-// 3 add js 
-//4 get elements from html +
-//5 createOneProductHTML +
-//6 showListProductsHTML +
-//7 createOptionFromCategories +
-//8 createOptionFromPrice +
-
-
-//9 - 10 filerPrice, filterCategory
-
-// ------------------------------------------------------------------------------
-
 // const
 const selectPrice = document.querySelector('#product-price')
 const productMinPrice = document.querySelector("#product-min_price")
@@ -46,15 +9,17 @@ const menuWrapper = document.querySelector('.menu-wrapper')
 const addBtn = document.querySelector(".add-btn")
 const addMenu = document.querySelector(".add-menu")
 const overlay = document.querySelector(".overlay")
+
 const addName = document.querySelector(".add-name")
 const addPrice = document.querySelector(".add-price")
 const addImgSrc = document.querySelector(".add-img_src")
+const addMenuImgDiv = document.querySelector(".add-menu__img-div")
 const addType = document.querySelector(".add-type")
 const addClose = document.querySelector(".add-close")
 const addApply = document.querySelector(".add-apply")
 
-
-
+let imageBase64 = null
+const reader = new FileReader()
 
 
 // logical
@@ -82,14 +47,6 @@ const addCategoryOptionsHTML = () => {
     addType.innerHTML = optionsResultHTML
 }
 
-// const addPriceOprionsHTML = () => {
-//     let optionsResultHTML = '<option value="0">Любая цена</option>'
-//     for (const key in priceFilter) {
-//         optionsResultHTML += createOptionFromPrice(priceFilter[key].text, key)
-//     }
-//     selectPrice.innerHTML = optionsResultHTML
-// }
-//  --- list ---
 const showListProductsHTML = () => {
     let listResultHTML = ''
     for (let i = 0; i < productsData.length; i++) {
@@ -101,74 +58,196 @@ const showListProductsHTML = () => {
 
 // ------------ filters ----------------
 const filterProducts = () => {
-    // const selectedPriceFilter = selectPrice.value
     const selectedMinimalPrice = productMinPrice.value
     const selectedMaximalPrice = productMaxPrice.value
     const selectedTypeFilter = selectType.value
     const selectedDiscount = discountCheck.checked
 
-    // if (selectedPriceFilter == 0 && selectedTypeFilter == 0) return menuWrapper.innerHTML = productsData.map(createOneProductHTML).join("")
-
-    //! ----------------------------
-    // const {
-    //     min,
-    //     max
-    // } = priceFilter[selectedPriceFilter] || {
-    //     min: 0,
-    //     max: Infinity
-    // }
     const min = selectedMinimalPrice == "" ? 0 : +selectedMinimalPrice
     const max = selectedMaximalPrice == "" ? Infinity : +selectedMaximalPrice
-    
-    
 
-    console.log(selectedMinimalPrice, selectedMaximalPrice)
-    
 
     const filtered = productsData.filter((elem) => {
-            const isPrice = elem.price >= min && elem.price <= max
-            const isCategory = selectedTypeFilter == 0 ? true : elem.category == selectedTypeFilter;
-            const isDiscount = selectedDiscount == false ? true : elem.isDiscount;
-            return isPrice && isCategory && isDiscount;
-            // if (selectedTypeFilter == 0) return elem.price >= min && elem.price <= max
-            // if (selectedTypeFilter != 0) return elem.price >= min && elem.price <= max && elem.category == selectedTypeFilter
-        })
+        const isPrice = elem.price >= min && elem.price <= max
+        const isCategory = selectedTypeFilter == 0 ? true : elem.category == selectedTypeFilter;
+        const isDiscount = selectedDiscount == false ? true : elem.isDiscount;
+        return isPrice && isCategory && isDiscount;
+    })
 
-
-    //! ----------------------------
-    // let filtered = productsData
-    // if (selectedPriceFilter != 0) {
-    //     const {min, max} = priceFilter[selectedPriceFilter]
-    //     filtered = filtered.filter((elem) => {
-    //         return elem.price >= min && elem.price <= max
-    //     })
-    // }
-
-    // if (selectedTypeFilter != 0){
-    //     filtered = filtered.filter((elem) => {
-    //         return elem.category == selectedTypeFilter
-    //     })
-    // }
-    //! ----------------------------
     menuWrapper.innerHTML = filtered.map(createOneProductHTML).join("")
 }
 
-// selectPrice.onchange = filterProducts
+productMinPrice.oninput = filterProducts
+productMaxPrice.oninput = filterProducts
+discountCheck.onchange = filterProducts
 selectType.onchange = filterProducts
 
 
 // ------------- add product -------------
+reader.onload = (event) => {
+    imageBase64 = event.target.result
+    addImgSrc.classList.add("display-none")
+    
+    const addMenuImg = document.createElement("img")
+    addMenuImg.src = imageBase64
+    addMenuImgDiv.appendChild(addMenuImg)
+    
+    const addMenuImgClose = document.createElement("div")
+    addMenuImgClose.classList.add("close-img")
+    addMenuImgClose.innerHTML = "X"
+    addMenuImgDiv.appendChild(addMenuImgClose)
+    
+    addMenuImgClose.onclick = () => {
+        addImgSrc.classList.remove("display-none")
+        addImgSrc.value = ""
+        imageBase64 = null
+        addMenuImgDiv.removeChild(addMenuImg)
+        addMenuImgDiv.removeChild(addMenuImgClose)
+    }
+    
+}
+
 const toggleAddMenuVisibility = () => {
     addMenu.classList.toggle("display-none")
     overlay.classList.toggle("display-none")
+    clearErrorPole()
 }
+
+const clearErrorOnChange = (tag) => {
+    tag.classList.remove("border-red")
+}
+
+addName.onchange = () => clearErrorOnChange(addName)
+addImgSrc.onchange = () => clearErrorOnChange(addImgSrc)
+addPrice.onchange = () => clearErrorOnChange(addPrice)
+addType.onchange = () => clearErrorOnChange(addType)
+
+const clearErrorPole = () => {
+    addName.classList.remove("border-red")
+    addName.placeholder = "Название"
+
+    addPrice.classList.remove("border-red")
+    addPrice.placeholder = "Цена";
+
+    addImgSrc.classList.remove("border-red")
+
+    addType.classList.remove("border-red")
+
+
+}
+const clearAddMenu = () => {
+    addName.value = ""
+    addImgSrc.value = ""
+    addType.value = 0
+    addPrice.value = ""
+}
+
+addImgSrc.onchange = () => {
+    const file = addImgSrc.files[0];
+    if (file) {
+        reader.readAsDataURL(file);
+    }
+};
+const addProduct = () => {
+    // const
+    const isName = onValidationText(addName);
+    const isPrice = onValidationText(addPrice);
+    const isFile = onValidationFile(addImgSrc);
+    const isCategory = onValidationSelect(addType);
+
+    // if error
+    if (isName || isPrice || isFile || isCategory) return 'Error'
+
+    // logical
+
+    const newProduct = {
+        name: addName.value,
+        imageSrc: imageBase64,
+        category: addType.value,
+        price: addPrice.value,
+        _id: generateID(),
+    }
+    productsData.push(newProduct)
+
+    // starts
+    showListProductsHTML()
+    toggleAddMenuVisibility()
+    clearAddMenu()
+    clearErrorPole()
+    saveProducts()
+}
+
+const onValidationText = (tag) => {
+    const isEmpty = tag.value == "" ? true : false;
+    if (isEmpty) tag.classList.add("border-red")
+    tag.placeholder = "Поле не может быть пустым"
+    return isEmpty;
+    // if(isEmpty) addApply.disabled = true
+}
+const onValidationFile = (tag) => {
+    const isEmpty = tag.files.length == 0 ? true : false;
+    if (isEmpty) tag.classList.add("border-red")
+    tag.placeholder = "Поле не может быть пустым"
+    return isEmpty;
+}
+const onValidationSelect = (tag) => {
+    const isEmpty = tag.value == 0 ? true : false;
+    if (isEmpty) tag.classList.add("border-red")
+    tag.placeholder = "Поле не может быть пустым"
+    return isEmpty;
+}
+
+
 
 addBtn.onclick = toggleAddMenuVisibility
 addClose.onclick = toggleAddMenuVisibility
+addApply.onclick = addProduct
 
 
+// ---------- localstorage -----------
+const localStorageNames = {
+    SAVED_FILTER_TYPE : "savedFilterType",
+    SAVED_MIN_PRICE : "SavedMinPrice",
+    SAVED_MAX_PRICE : "SavedMaxPrice",
+    SAVED_PRODUCTS : "SavedProducts",
+}
 
+// save filters
+const saveFilterType = () => {
+    localStorage.setItem(localStorageNames.SAVED_FILTER_TYPE, +selectType.value)
+}
+// const saveFilterPrice = () => {
+    
+// }
+selectType.addEventListener("change", saveFilterType)
+
+// save products list
+const saveProducts = () => {
+    localStorage.setItem(localStorageNames.SAVED_PRODUCTS, JSON.stringify(productsData))
+}
+
+
+const onLoadStorage = () => {
+    const savedData = localStorage.getItem(localStorageNames.SAVED_PRODUCTS)
+    if (savedData) {
+        productsData = JSON.parse(savedData)
+    }
+
+    selectType.value = localStorage.getItem(localStorageNames.SAVED_FILTER_TYPE);
+}
 // starts
-showListProductsHTML()
 addCategoryOptionsHTML()
-// addPriceOprionsHTML()
+onLoadStorage()
+filterProducts()
+
+
+
+
+// const file = teg.files[0]
+// const reader = new FileReader();
+
+// reader.onload = (e) => {
+//     const result = e.target.result;
+// }
+
+// reader.readAsDataURL(file)

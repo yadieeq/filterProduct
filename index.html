@@ -19,11 +19,11 @@
         <h3>Цена</h3>
         <!-- <select name="Цена" id="product-price"></select> -->
         <input type="number" name="" id="product-min_price" placeholder="minimal price">
-        <input type="number" name="" id="product-max_price" placeholder="maximum price">
+        <input type="number" name="" id="product-max_price" placeholder="maximal price">
         <h3>Тип</h3>
         <select name="Тип" id="product-type"></select>
         <h3>Скидки</h3>
-        <label><input type="checkbox" id="product-discount" class="checkbox color-primary" checked /> </label>
+        <label><input type="checkbox" id="product-discount" class="checkbox color-primary" /> </label>
 
 
     </div> 
@@ -36,7 +36,10 @@
     <div class="add-menu f-c-c-c display-none">
         <input type="text" class="add-name" placeholder="Название">
         <input type="number" class="add-price" placeholder="Цена">
-        <input type="text" class="add-img_src" placeholder="src картинки">
+        <div class="add-menu__img-div">
+
+            <input type="file" class="add-img_src">
+        </div>
         <select name="Категория" class="add-type"></select>
         <div class="add__buttons f-c-c-r">
             <button class="add-close">Close</button>
