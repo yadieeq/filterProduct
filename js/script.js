@@ -17,6 +17,9 @@ const addType = document.querySelector(".add-type")
 const addClose = document.querySelector(".add-close")
 const addApply = document.querySelector(".add-apply")
 
+const addMenuImg = document.querySelector(".add-menu-img")
+const addMenuImgClose = document.querySelector(".close-img")
+
 let imageBase64 = null
 const reader = new FileReader()
 
@@ -83,33 +86,36 @@ selectType.onchange = filterProducts
 
 
 // ------------- add product -------------
+const disableAddMenuImg = () => {
+    addImgSrc.classList.remove("display-none")
+
+    addMenuImg.classList.add("display-none")
+    addMenuImgClose.classList.add("display-none")
+}
+const enableAddMenuImg = () => {
+    addImgSrc.classList.add("display-none")
+
+    addMenuImg.classList.remove("display-none")
+    addMenuImgClose.classList.remove("display-none")
+}
+
 reader.onload = (event) => {
     imageBase64 = event.target.result
-    addImgSrc.classList.add("display-none")
-    
-    const addMenuImg = document.createElement("img")
+    enableAddMenuImg()
     addMenuImg.src = imageBase64
-    addMenuImgDiv.appendChild(addMenuImg)
-    
-    const addMenuImgClose = document.createElement("div")
-    addMenuImgClose.classList.add("close-img")
-    addMenuImgClose.innerHTML = "X"
-    addMenuImgDiv.appendChild(addMenuImgClose)
-    
-    addMenuImgClose.onclick = () => {
-        addImgSrc.classList.remove("display-none")
-        addImgSrc.value = ""
-        imageBase64 = null
-        addMenuImgDiv.removeChild(addMenuImg)
-        addMenuImgDiv.removeChild(addMenuImgClose)
-    }
-    
+}
+
+addMenuImgClose.onclick = () => {
+    disableAddMenuImg()
+    addImgSrc.value = ""
+    imageBase64 = null
 }
 
 const toggleAddMenuVisibility = () => {
     addMenu.classList.toggle("display-none")
     overlay.classList.toggle("display-none")
     clearErrorPole()
+    clearAddMenu()
 }
 
 const clearErrorOnChange = (tag) => {
@@ -139,6 +145,8 @@ const clearAddMenu = () => {
     addImgSrc.value = ""
     addType.value = 0
     addPrice.value = ""
+    imageBase64 = null
+    disableAddMenuImg()
 }
 
 addImgSrc.onchange = () => {
@@ -174,6 +182,8 @@ const addProduct = () => {
     clearAddMenu()
     clearErrorPole()
     saveProducts()
+    filterProducts()
+
 }
 
 const onValidationText = (tag) => {
@@ -181,7 +191,6 @@ const onValidationText = (tag) => {
     if (isEmpty) tag.classList.add("border-red")
     tag.placeholder = "Поле не может быть пустым"
     return isEmpty;
-    // if(isEmpty) addApply.disabled = true
 }
 const onValidationFile = (tag) => {
     const isEmpty = tag.files.length == 0 ? true : false;
@@ -249,15 +258,3 @@ const onLoadStorage = () => {
 addCategoryOptionsHTML()
 onLoadStorage()
 filterProducts()
-
-
-
-
-// const file = teg.files[0]
-// const reader = new FileReader();
-
-// reader.onload = (e) => {
-//     const result = e.target.result;
-// }
-
-// reader.readAsDataURL(file)
